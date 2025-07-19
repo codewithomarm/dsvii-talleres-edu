@@ -54,22 +54,27 @@ TAREAS
 
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    cedula
     nombre VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE
+    password_hash VARCHAR(255) NOT NULL
     email VARCHAR(100) NOT NULL UNIQUE,
-    is_admin
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    is_admin TINYINT(1) NOT NULL DEFAULT 0,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    cedula_id BIGINT NOT NULL UNIQUE,
+    FOREIGN KEY (cedula_id) REFERENCES cedula(id)
+      ON DELETE RESTRICT
+      ON UPDATE CASCADE
 );
 
 CREATE TABLE talleres (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(100) NOT NULL,
-    descripcion TEXT,
-    // publico_objetivo VARCHAR(100),
+    descripcion VARCHAR(300),
     cupo_maximo INT NOT NULL,
     fecha_inicio DATE,
-    hora
-    fecha_fin DATE
+    hora_inicio TIME,
+    fecha_fin DATE,
+    hora_fin TIME
 );
 
 CREATE TABLE inscripciones (
@@ -82,67 +87,32 @@ CREATE TABLE inscripciones (
     FOREIGN KEY (taller_id) REFERENCES talleres(id) ON DELETE CASCADE
 );
 
------------------------------------------------------------------------------
-
-
-
 CREATE TABLE cedula_category (
-  code        VARCHAR(2) PRIMARY KEY,   -- NAC, N, E, PE, PI
-  description TEXT    NOT NULL
+  code VARCHAR(2) PRIMARY KEY,
+  description VARCHAR (100) NOT NULL
 );
-
--- Datos de ejemplo
-INSERT INTO cedula_category(code, description) VALUES
-  ('NAC', 'Panameño por nacimiento'),
-  ('N',   'Naturalizado'),
-  ('E',   'Extranjero domiciliado'),
-  ('PE',  'Panameño nacido en el extranjero'),
-  ('PI',  'Población indígena');
 
 CREATE TABLE province (
-  code   SMALLINT PRIMARY KEY,    -- 1..13
-  name   VARCHAR(50) NOT NULL
+  code SMALLINT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL
 );
 
--- Datos de ejemplo
-INSERT INTO province(code, name) VALUES
-  (1,  'Bocas del Toro'),
-  (2,  'Coclé'),
-  (3,  'Colón'),
-  (4,  'Chiriquí'),
-  (5,  'Darién'),
-  (6,  'Herrera'),
-  (7,  'Los Santos'),
-  (8,  'Panamá'),
-  (9,  'Veraguas'),
-  (10, 'Guna Yala, Madugandí, Wargandí'),
-  (11, 'Emberá Wounaan'),
-  (12, 'Ngäbe-Buglé'),
-  (13, 'Panamá Oeste');
-
 CREATE TABLE cedula (
-  id               BIGSERIAL PRIMARY KEY,
-  
-  category_code    VARCHAR(2) NOT NULL
+  id BIGSERIAL PRIMARY KEY,
+  category_code VARCHAR(2) NOT NULL
     REFERENCES cedula_category(code)
     ON UPDATE CASCADE
     ON DELETE RESTRICT,
-  
-  province_code    SMALLINT        -- obligatorio para NAC, opcional en otros
+  province_code SMALLINT
     REFERENCES province(code)
     ON UPDATE CASCADE
     ON DELETE RESTRICT,
-  
-  letter_prefix    VARCHAR(2),     -- N, E, PE, PI… según categoría
-  
-  tomo             INTEGER NOT NULL CHECK (tomo  > 0),
-  asiento          INTEGER NOT NULL CHECK (asiento > 0),
-
-  -- Una sola cédula debe ser única
+  letter_prefix    VARCHAR(2),
+  tomo INTEGER NOT NULL CHECK (tomo  > 0),
+  asiento INTEGER NOT NULL CHECK (asiento > 0),
   CONSTRAINT uq_cedula_full UNIQUE (
     category_code, province_code, letter_prefix, tomo, asiento
   ),
-
   -- Validaciones por categoría:
   CONSTRAINT chk_cedula_category_format CHECK (
     (category_code = 'NAC'
@@ -166,3 +136,29 @@ CREATE TABLE cedula (
        AND province_code IS NOT NULL)
   )
 );
+
+
+
+-- Datos de ejemplo
+INSERT INTO cedula_category(code, description) VALUES
+  ('NAC', 'Panameño por nacimiento'),
+  ('N',   'Naturalizado'),
+  ('E',   'Extranjero domiciliado'),
+  ('PE',  'Panameño nacido en el extranjero'),
+  ('PI',  'Población indígena');
+
+-- Datos de ejemplo
+INSERT INTO province(code, name) VALUES
+  (1,  'Bocas del Toro'),
+  (2,  'Coclé'),
+  (3,  'Colón'),
+  (4,  'Chiriquí'),
+  (5,  'Darién'),
+  (6,  'Herrera'),
+  (7,  'Los Santos'),
+  (8,  'Panamá'),
+  (9,  'Veraguas'),
+  (10, 'Guna Yala, Madugandí, Wargandí'),
+  (11, 'Emberá Wounaan'),
+  (12, 'Ngäbe-Buglé'),
+  (13, 'Panamá Oeste');
