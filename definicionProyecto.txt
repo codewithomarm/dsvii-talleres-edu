@@ -162,3 +162,10 @@ INSERT INTO province(code, name) VALUES
   (11, 'Emberá Wounaan'),
   (12, 'Ngäbe-Buglé'),
   (13, 'Panamá Oeste');
+
+  Para crear un el usuario y pasword definidas al comienzo del archivo:
+
+  CREATE USER 'dsvii_final'@'localhost' IDENTIFIED BY 'root';
+  
+  GRANT ALL PRIVILEGES ON dsvii_final to 'dsvii_final'@'localhost' WITH GRANT OPTION;
+
