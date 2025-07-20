@@ -1,6 +1,6 @@
 TAREAS
 	- Conexion a la base de datos:
-		- username: dbdsvii
+		- username: dsvii
 		- password: root
 	- Base de datos
 		- Diseño de Tablas
