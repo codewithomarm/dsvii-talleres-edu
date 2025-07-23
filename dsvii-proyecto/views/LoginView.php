@@ -1,15 +1,5 @@
 <?php
-// Conexión básica a la base de datos (comentado para pruebas de diseño)
-/*
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "tu_base_de_datos";
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-*/
+
 require_once __DIR__ . '/controllers/LoginController.php';
 $mensaje = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
