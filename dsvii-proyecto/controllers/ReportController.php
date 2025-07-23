@@ -6,12 +6,6 @@ class ReportController {
         $this->model = $model;
     }
 
-    /**
-     * Genera y descarga el reporte en JSON o XML según el tipo y formato.
-     * @param string $reportType Tipo de reporte (ej. all_users, user, all_workshops, workshop, users_with_workshops, workshops_with_users, workshops_by_user, users_by_workshop)
-     * @param string $format     Formato de salida: json o xml
-     * @param mixed  $param      Parámetro para reportes individuales o específicos (int para id, string para username o título)
-     */
     public function generateReport(string $reportType, string $format, $param = null): void {
         try {
             switch ($reportType) {

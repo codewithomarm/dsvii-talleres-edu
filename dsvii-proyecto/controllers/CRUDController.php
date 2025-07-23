@@ -1,74 +1,126 @@
 <?php
 require_once __DIR__ . '/../models/CRUDModel.php';
 
-class CRUDController {
+class CRUDController
+{
     private CRUDModel $model;
 
-    public function __construct(CRUDModel $model) {
-        $this->model = $model;
+    public function __construct(PDO $pdo)
+    {
+        $this->model = new CRUDModel($pdo);
     }
 
-    // Validación básica para taller
-    private function validateTallerData(array $data): array {
-        $errors = [];
+    // Crear taller
+    public function handleCreateTaller(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'titulo' => $_POST['titulo'] ?? '',
+                'descripcion' => $_POST['descripcion'] ?? '',
+                'cupo_maximo' => $_POST['cupo_maximo'] ?? '',
+                'fecha_inicio' => $_POST['fecha_inicio'] ?? '',
+                'hora_inicio' => $_POST['hora_inicio'] ?? '',
+                'fecha_fin' => $_POST['fecha_fin'] ?? '',
+                'hora_fin' => $_POST['hora_fin'] ?? ''
+            ];
 
-        if (empty($data['titulo'])) {
-            $errors[] = "El título es obligatorio.";
-        }
-        if (empty($data['cupo_maximo']) || !filter_var($data['cupo_maximo'], FILTER_VALIDATE_INT, ["options" => ["min_range" => 1]])) {
-            $errors[] = "El cupo máximo debe ser un número entero mayor que 0.";
-        }
-        if (empty($data['fecha_inicio']) || empty($data['fecha_fin'])) {
-            $errors[] = "Las fechas de inicio y fin son obligatorias.";
-        } else {
-            $fi = strtotime($data['fecha_inicio']);
-            $ff = strtotime($data['fecha_fin']);
-            if ($fi === false || $ff === false || $fi > $ff) {
-                $errors[] = "La fecha de inicio debe ser menor o igual que la fecha de fin.";
+            try {
+                $success = $this->model->createTaller($data);
+                echo json_encode([
+                    'status' => $success ? 'success' : 'error',
+                    'message' => $success ? 'Taller creado exitosamente.' : 'No se pudo crear el taller.'
+                ]);
+            } catch (Exception $e) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Error al crear taller: ' . $e->getMessage()
+                ]);
             }
         }
-        if (empty($data['hora_inicio']) || empty($data['hora_fin'])) {
-            $errors[] = "Las horas de inicio y fin son obligatorias.";
-        } else {
-            $hi = strtotime($data['hora_inicio']);
-            $hf = strtotime($data['hora_fin']);
-            if ($hi === false || $hf === false) {
-                $errors[] = "Horas inválidas.";
+    }
+
+    // Actualizar taller
+    public function handleUpdateTaller(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'] ?? null;
+
+            $data = [
+                'titulo' => $_POST['titulo'] ?? '',
+                'descripcion' => $_POST['descripcion'] ?? '',
+                'cupo_maximo' => $_POST['cupo_maximo'] ?? '',
+                'fecha_inicio' => $_POST['fecha_inicio'] ?? '',
+                'hora_inicio' => $_POST['hora_inicio'] ?? '',
+                'fecha_fin' => $_POST['fecha_fin'] ?? '',
+                'hora_fin' => $_POST['hora_fin'] ?? ''
+            ];
+
+            try {
+                if (!$id) {
+                    throw new Exception('ID de taller no proporcionado.');
+                }
+
+                $success = $this->model->updateTaller((int)$id, $data);
+                echo json_encode([
+                    'status' => $success ? 'success' : 'error',
+                    'message' => $success ? 'Taller actualizado correctamente.' : 'No se pudo actualizar el taller.'
+                ]);
+            } catch (Exception $e) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Error al actualizar taller: ' . $e->getMessage()
+                ]);
             }
         }
-
-        return $errors;
     }
 
-    public function createTaller(array $data): array {
-        $errors = $this->validateTallerData($data);
-        if (!empty($errors)) {
-            return ['success' => false, 'errors' => $errors];
+    // Eliminar taller
+    public function handleDeleteTaller(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'] ?? null;
+
+            try {
+                if (!$id) {
+                    throw new Exception('ID de taller no proporcionado.');
+                }
+
+                $success = $this->model->deleteTaller((int)$id);
+                echo json_encode([
+                    'status' => $success ? 'success' : 'error',
+                    'message' => $success ? 'Taller eliminado correctamente.' : 'No se pudo eliminar el taller.'
+                ]);
+            } catch (Exception $e) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Error al eliminar taller: ' . $e->getMessage()
+                ]);
+            }
         }
-        $result = $this->model->createTaller($data);
-        return $result ? ['success' => true, 'message' => 'Taller creado exitosamente.']
-                       : ['success' => false, 'errors' => ['Error al crear el taller.']];
     }
 
-    public function updateTaller(int $id, array $data): array {
-        $errors = $this->validateTallerData($data);
-        if (!empty($errors)) {
-            return ['success' => false, 'errors' => $errors];
+    // Eliminar usuario
+    public function handleDeleteUsuario(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = $_POST['id'] ?? null;
+
+            try {
+                if (!$id) {
+                    throw new Exception('ID de usuario no proporcionado.');
+                }
+
+                $success = $this->model->deleteUsuario((int)$id);
+                echo json_encode([
+                    'status' => $success ? 'success' : 'error',
+                    'message' => $success ? 'Usuario eliminado correctamente.' : 'No se pudo eliminar el usuario.'
+                ]);
+            } catch (Exception $e) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Error al eliminar usuario: ' . $e->getMessage()
+                ]);
+            }
         }
-        $result = $this->model->updateTaller($id, $data);
-        return $result ? ['success' => true, 'message' => 'Taller actualizado exitosamente.']
-                       : ['success' => false, 'errors' => ['Error al actualizar el taller.']];
-    }
-
-    public function deleteTaller(int $id): array {
-        $result = $this->model->deleteTaller($id);
-        return $result ? ['success' => true, 'message' => 'Taller eliminado exitosamente.']
-                       : ['success' => false, 'errors' => ['Error al eliminar el taller.']];
-    }
-
-    public function deleteUsuario(int $id): array {
-        $result = $this->model->deleteUsuario($id);
-        return $result ? ['success' => true, 'message' => 'Usuario eliminado exitosamente.']
-                       : ['success' => false, 'errors' => ['Error al eliminar el usuario.']];
     }
 }

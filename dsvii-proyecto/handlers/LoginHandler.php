@@ -1,20 +1,25 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 
-require_once __DIR__ . '/path/to/UserModel.php';
-require_once __DIR__ . '/path/to/UserController.php';
+require_once dirname(__DIR__) . '/models/UserModel.php';
+require_once dirname(__DIR__) . '/controllers/UserController.php';
 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         throw new Exception('Invalid request method');
     }
 
-    $username = $_POST['username'] ?? '';
+    $username = $_POST['usuario'] ?? '';
     $password = $_POST['password'] ?? '';
 
-    $pdo = new PDO('mysql:host=localhost;dbname=dsvii_final;charset=utf8mb4', 'usuario', 'password', [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-    ]);
+    require_once __DIR__ . '/../core/Database.php';
+
+    $db = new Database();
+    $pdo = $db->getConnection();
+
 
     $userModel = new UserModel($pdo);
     $userController = new UserController($userModel);
@@ -26,8 +31,8 @@ try {
     $response = json_decode($output, true);
 
     if ($response && $response['status'] === 'success') {
-        // Login correcto, redirigir a dashboard o home
-        header('Location: /dashboard.php');
+        
+        header('Location: ../views/UserView.php');
         exit;
     } else {
         // Error de login, redirigir a login con mensaje
@@ -35,7 +40,6 @@ try {
         header('Location: /LoginView.php?error=' . urlencode($errorMsg));
         exit;
     }
-
 } catch (Exception $e) {
     // En caso de error inesperado
     header('Location: /LoginView.php?error=' . urlencode($e->getMessage()));

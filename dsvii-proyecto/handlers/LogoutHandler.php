@@ -2,5 +2,5 @@
 session_start();
 session_unset();
 session_destroy();
-header('Location: LoginView.php');
+header('Location: ../views/LoginView.php');
 exit();

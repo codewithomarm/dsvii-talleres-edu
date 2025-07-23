@@ -12,15 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userController = new UserController($userModel);
 
     $data = [
-        'full_name' => $_POST['full_name'] ?? '',
+        'nombre' => $_POST['full_name'] ?? '',
         'username' => $_POST['username'] ?? '',
         'email' => $_POST['email'] ?? '',
-        'password' => $_POST['password'] ?? '',
-        'id_type' => $_POST['id_type'] ?? '',
-        'province' => $_POST['province'] ?? '',
-        'id_part1' => $_POST['id_part1'] ?? '',
-        'id_part2' => $_POST['id_part2'] ?? '',
-        'id_part3' => $_POST['id_part3'] ?? '',
+        'password' => $_POST['password'],
+        'category_code' => $_POST['id_type'] ?? null,
+        'province_code' => getProvinceCode($_POST['province'] ?? null),
+        'letter_prefix' => $_POST['id_part1'] ?? null,
+        'tomo' => $_POST['id_part2'] ?? null,
+        'asiento' => $_POST['id_part3'] ?? null,
     ];
 
     ob_start();
@@ -28,6 +28,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = ob_get_clean();
     $result = json_decode($response, true);
     $message = $result['message'] ?? 'There was a problem during registration.';
+}
+
+function getProvinceCode(?string $provinceName): ?int {
+    $provinces = [
+        "Bocas del Toro" => 1,
+        "Coclé" => 2,
+        "Colón" => 3,
+        "Chiriquí" => 4,
+        "Darién" => 5,
+        "Herrera" => 6,
+        "Los Santos" => 7,
+        "Panamá" => 8,
+        "Veraguas" => 9,
+        "Guna Yala, Madugandí, Wargandí" => 10,
+        "Emberá Wounaan" => 11,
+        "Ngäbe-Buglé" => 12,
+        "Panamá Oeste" => 13
+    ];
+
+    return $provinces[$provinceName] ?? null;
 }
 
 require_once __DIR__ . '/Partials/Top.php';
@@ -66,8 +86,6 @@ require_once __DIR__ . '/Partials/Top.php';
     </label>
   <?php endforeach; ?>
 </div>
-
-
       <label for="province">Province</label>
       <select id="province" name="province" required>
         <option value="">Select a province</option>
@@ -81,11 +99,11 @@ require_once __DIR__ . '/Partials/Top.php';
 
       <label>ID Number</label>
       <div style="display: flex; gap: 10px;">
-        <input type="text" name="id_part1" maxlength="2" pattern="\d{2}" required style="max-width: 50px;">
+        <input type="text" id="id_part1" name="id_part1" maxlength="2" required style="max-width: 50px;" readonly>
+        <span>-</span>  
+        <input type="text" name="id_part2" maxlength="5" required style="max-width: 90px;">
         <span>-</span>
-        <input type="text" name="id_part2" maxlength="5" pattern="\d{5}" required style="max-width: 90px;">
-        <span>-</span>
-        <input type="text" name="id_part3" maxlength="5" pattern="\d{5}" required style="max-width: 90px;">
+        <input type="text" name="id_part3" maxlength="5" required style="max-width: 90px;">
       </div>
 
       <label for="username">Username</label>
@@ -96,6 +114,39 @@ require_once __DIR__ . '/Partials/Top.php';
 
       <button type="submit">Register</button>
     </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const provinceSelect = document.getElementById("province");
+        const idPart1Input = document.getElementById("id_part1");
+
+        const provinceMap = {
+            "Bocas del Toro": "01",
+            "Coclé": "02",
+            "Colón": "03",
+            "Chiriquí": "04",
+            "Darién": "05",
+            "Herrera": "06",
+            "Los Santos": "07",
+            "Panamá": "08",
+            "Veraguas": "09",
+            "Guna Yala, Madugandí, Wargandí": "10",
+            "Emberá Wounaan": "11",
+            "Ngäbe-Buglé": "12",
+            "Panamá Oeste": "13"
+        };
+
+        provinceSelect.addEventListener("change", () => {
+            const selectedProvince = provinceSelect.value;
+            if (provinceMap.hasOwnProperty(selectedProvince)) {
+                idPart1Input.value = provinceMap[selectedProvince];
+            } else {
+                idPart1Input.value = "";
+            }
+        });
+
+        });
+    </script>
   </div>
 </main>
 

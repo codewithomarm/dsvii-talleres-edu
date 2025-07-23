@@ -11,7 +11,7 @@
                 <a href="/../dsvii-talleres-edu/dsvii-proyecto/views/UserView.php">My Account</a>
                 <a href="/../dsvii-talleres-edu/dsvii-proyecto/views/TalleresUsuariosView.php">Workshops</a>
             <?php endif; ?>
-            <a href="LogoutHandler.php">Logout (<?= htmlspecialchars($_SESSION['username']) ?>)</a>
+            <a href="/dsvii-proyecto/handlers/LogoutHandler.php">Logout (<?= htmlspecialchars($_SESSION['username']) ?>)</a>
         <?php else: ?>
             <a href="/../dsvii-talleres-edu/dsvii-proyecto/views/LoginView.php">Login</a>
             <a href="/../dsvii-talleres-edu/dsvii-proyecto/views/RegisterView.php">Register</a>
