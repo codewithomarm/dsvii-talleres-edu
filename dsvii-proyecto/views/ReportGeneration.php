@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-require_once __DIR__ . './../models/ReportModel.php';
-require_once __DIR__ . './../controllers/ReportController.php';
-require_once __DIR__ . './../core/Database.php';
+require_once __DIR__ . '/../models/ReportModel.php';
+require_once __DIR__ . '/../controllers/ReportController.php';
+require_once __DIR__ . '/../core/Database.php';
 
 try {
     $reportType = $_POST['reportType'] ?? '';

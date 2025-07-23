@@ -1,24 +1,7 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Generación de Reportes</title>
-    <link rel="stylesheet" href="./../public/css/report.css">
-</head>
-
-<body>
-
-    <header>
-        <div class="logo-container">
-            <img src="./../public/images/logo.svg" alt="Logo Edu_Works" class="logo" />
-        </div>
-        <nav>
-            <a href="index.php">Inicio</a>
-            <a href="crear_taller.php">Crear Taller</a>
-            <a href="logout.php">Logout</a>
-        </nav>
-    </header>
+    <?php 
+    $extraStyles = '<link rel="stylesheet" href="/../dsvii-talleres-edu/dsvii-proyecto/public/css/ReportView.css">';
+    require_once __DIR__ . '/Partials/Top.php';
+    ?>
 
     <main>
         <form class="card" method="POST" action="./ReportGeneration.php">
@@ -50,15 +33,8 @@
             <button type="submit">Generar Reporte</button>
         </form>
 
-        <script src="./../public/js/report.js"></script>
+        <script src="/../dsvii-talleres-edu/dsvii-proyecto/public/js/report.js"></script>
 
     </main>
 
-    <footer>
-        <div><strong>Edu_</strong>Works</div>
-        <div>Panamá 2025 ©</div>
-    </footer>
-
-</body>
-
-</html>
+    <?php include '../views/Partials/Bottom.php'; ?>

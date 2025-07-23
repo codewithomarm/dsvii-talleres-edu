@@ -1,0 +1,50 @@
+/* Mensajes de error */
+.error-message {
+    background-color: #f8d7da;
+    color: #842029;
+    border: 1px solid #f5c2c7;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-family: 'Zilla Slab', serif;
+    font-weight: 700;
+}
+
+/* Botones */
+form.card button {
+    background-color: #2B3990;
+    border-color: #2B3990;
+    font-family: 'Zilla Slab', serif;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+}
+
+form.card button:hover {
+    background-color: #1a255e;
+    border-color: #1a255e;
+}
+
+/* Inputs uniformes */
+form.card input {
+    font-size: 1.1rem;
+    padding: 12px 10px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: 'Arvo', serif;  /* O Zilla Slab si prefieres */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+/* Texto pequeño centrado y en negrita */
+.small-text {
+    font-family: 'Zilla Slab', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+    margin-top: 1rem;
+}

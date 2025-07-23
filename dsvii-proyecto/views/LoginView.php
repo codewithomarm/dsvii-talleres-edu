@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 require_once __DIR__ . '/controllers/LoginController.php';
@@ -10,58 +11,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
     $mensaje = $result['message'];
 }
+=======
+<?php 
+$extraStyles = '<link rel="stylesheet" href="/../dsvii-talleres-edu/dsvii-proyecto/public/css/LoginView.css">';
+require_once __DIR__ . '/Partials/Top.php';
+>>>>>>> 9ff4469337afcf9b5507745a52097cdad8ad2d08
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Empresa</title>
-    <?php include 'styles.php'; ?>
-</head>
-<body>
-    <?php include 'navbar.php'; ?>
-   
-    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-        <div class="card p-4 shadow" style="max-width: 400px; width: 100%;">
-            <h3 class="mb-4 text-center">Iniciar Sesión</h3>
-            <?php if ($mensaje): ?>
-                <div class="alert alert-info text-center"> <?= htmlspecialchars($mensaje) ?> </div>
-            <?php endif; ?>
-            <form method="POST" action="Login.php">
-                <div class="mb-3">
-                    <label for="usuario" class="form-label">Nombre de usuario</label>
-                    <input type="text" class="form-control" id="usuario" name="usuario" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Ingresar</button>
-            </form>
-            <div class="mt-3 text-center">
-                <span>Aún no se ha registrado? </span>
-                <a href="registro.php">Regístrate</a>
+
+<main>
+    <form class="card" method="POST" action="./LoginHandler.php">
+        <h2>Inicio de Sesión</h2>
+
+        <?php if (isset($_GET['error'])): ?>
+            <div class="error-message">
+                <?= htmlspecialchars($_GET['error']) ?>
             </div>
+        <?php endif; ?>
+
+        <label for="username">Nombre de usuario</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Iniciar Sesión</button>
+
+        <div class="small-text text-center mt-3">
+            ¿No tienes cuenta? <a href="registro.php">Regístrate</a>
         </div>
-    </div>
-    <?php include 'footer.php'; ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-   
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form[action="Login.php"]');
-        if(form) {
-            form.addEventListener('submit', function(e) {
-                let valid = true;
-                if(form.usuario.value.trim() === '' || form.password.value.trim() === '') valid = false;
-                if(!valid) {
-                    alert('Por favor, complete usuario y contraseña.');
-                    e.preventDefault();
-                }
-            });
-        }
-    });
-    </script>
-</body>
-</html>
+    </form>
+
+    <script src="/../dsvii-talleres-edu/dsvii-proyecto/public/js/login.js"></script>
+</main>
+
+
+<?php include '../views/Partials/Bottom.php'; ?>
