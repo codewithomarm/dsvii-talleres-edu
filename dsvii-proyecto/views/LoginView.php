@@ -1,6 +1,21 @@
+<<<<<<< HEAD
+<?php
+
+require_once __DIR__ . '/controllers/LoginController.php';
+$mensaje = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $controller = new LoginController();
+    $result = $controller->validarLogin(
+        $_POST['usuario'] ?? '',
+        $_POST['password'] ?? ''
+    );
+    $mensaje = $result['message'];
+}
+=======
 <?php 
 $extraStyles = '<link rel="stylesheet" href="/../dsvii-talleres-edu/dsvii-proyecto/public/css/LoginView.css">';
 require_once __DIR__ . '/Partials/Top.php';
+>>>>>>> 9ff4469337afcf9b5507745a52097cdad8ad2d08
 ?>
 
 <main>
