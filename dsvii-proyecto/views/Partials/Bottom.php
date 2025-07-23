@@ -1,6 +1,4 @@
-
-<?php include 'Footer.php' ?>
+<?php include __DIR__ . '/Footer.php'; ?>
 
 </body>
-
 </html>

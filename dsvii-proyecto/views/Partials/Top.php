@@ -1,8 +1,8 @@
-!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html>
+<html lang="en">
 
-<?php include './Head.php' ?>
+<?php include __DIR__ . '/Head.php'; ?>
 
 <body>
 
-<?php include './Header.php' ?>
+<?php include __DIR__ . '/Header.php'; ?>

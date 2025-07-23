@@ -1,7 +1,5 @@
-/* Importación de la fuente Arvo desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Arvo&display=swap');
 
-/* Estilos generales */
 body {
     margin: 0;
     font-family: 'Arvo', serif;
@@ -9,10 +7,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    color: #000; /* Color por defecto para texto */
+    color: #000;
 }
 
-/* Header con fondo blanco y línea separadora */
 header {
     background-color: white;
     color: black;
@@ -21,27 +18,26 @@ header {
     justify-content: space-between;
     align-items: center;
     font-family: 'Arvo', serif;
-    border-bottom: 2px solid #ccc; /* Línea separadora clara */
+    border-bottom: 2px solid #ccc;
 }
 
-/* Ajustar enlaces del header para mejor contraste */
 header nav a {
-    color: black; /* texto negro por defecto */
+    color: black;
     margin-left: 20px;
     text-decoration: none;
     font-weight: bold;
-    padding: 10px 15px; /* relleno vertical e horizontal para ocupar espacio */
+    padding: 10px 15px;
     border-radius: 5px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    display: inline-flex;       /* para que tome altura y permita centrar contenido */
-    align-items: center;        /* centrar vertical texto dentro del link */
-    height: 100%;               /* intentar ocupar toda la altura del contenedor */
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
     box-sizing: border-box;
 }
 
 header nav a:hover {
-    background-color: #2B3990; /* azul de la página */
-    color: white;              /* texto blanco */
+    background-color: #2B3990;
+    color: white;
     text-decoration: none;
 }
 
@@ -51,34 +47,30 @@ header nav a:hover {
 }
 
 .logo {
-    height: 35px; /* ajusta según tamaño deseado */
+    height: 35px;
     width: auto;
     object-fit: contain;
 }
-    
-/* Encabezado y pie de página */
+
 footer {
-    background-color: #2B3990; /* Azul específico */
+    background-color: #2B3990;
     color: white;
     padding: 10px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-family: 'Arvo', serif; /* Reafirmar fuente en secciones */
+    font-family: 'Arvo', serif;
     font-size: 14px;
 }
 
-/* Área principal */
 main {
     flex: 1;
     display: flex;
     justify-content: center;
-    /* Cambiar align-items para evitar el salto vertical */
     align-items: flex-start;
     padding: 60px 20px;
 }
 
-/* Tarjetas */
 .card {
     background-color: white;
     padding: 30px;
@@ -90,14 +82,12 @@ main {
     font-family: 'Arvo', serif;
 }
 
-/* Formulario dentro de tarjeta */
 form.card {
     max-width: 400px;
     margin: 0 auto;
     padding: 1rem;
 }
 
-/* Títulos */
 h2 {
     text-align: center;
     margin-bottom: 30px;
@@ -105,7 +95,6 @@ h2 {
     font-family: 'Arvo', serif;
 }
 
-/* Etiquetas */
 label {
     font-weight: bold;
     display: block;
@@ -114,7 +103,6 @@ label {
     font-family: 'Arvo', serif;
 }
 
-/* Inputs y select */
 select,
 input[type="text"],
 #param {
@@ -127,13 +115,11 @@ input[type="text"],
     font-family: 'Arvo', serif;
 }
 
-/* Ajuste específico para input param */
 #param {
     padding: 0.4rem 0.6rem;
     font-size: 1rem;
 }
 
-/* Grupo de radio buttons */
 .radio-group {
     display: flex;
     gap: 20px;
@@ -155,7 +141,6 @@ input[type="text"],
     margin-right: 5px;
 }
 
-/* Botón principal */
 button {
     margin-top: 25px;
     width: 100%;
@@ -170,23 +155,6 @@ button {
     font-family: 'Arvo', serif;
 }
 
-/* Campo de búsqueda dinámica */
-#searchFieldGroup {
-    overflow: hidden;
-    max-height: 0;
-    opacity: 0;
-    margin-top: 0;
-    transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease;
-}
-
-/* Al mostrar */
-#searchFieldGroup.show {
-    max-height: 100px; /* Ajusta según la altura real del contenido */
-    opacity: 1;
-    margin-top: 1rem;
-}
-
-/* Formularios: etiquetas y controles */
 form.card label,
 form.card select,
 form.card input[type="text"] {

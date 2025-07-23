@@ -1,8 +1,8 @@
     <header>
         <div class="logo-container">
-            <img src="./../public/images/logo.svg" alt="Logo Edu_Works" class="logo" />
+            <img src="/../dsvii-talleres-edu/dsvii-proyecto/public/images/logo.svg" alt="Logo Edu_Works" class="logo" />
         </div>
 
-        <?php include 'nav.php'; ?>
-        
+        <?php include __DIR__ .  '/Nav.php'; ?>
+
     </header>
