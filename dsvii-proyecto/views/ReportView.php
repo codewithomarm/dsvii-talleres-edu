@@ -1,5 +1,5 @@
     <?php 
-    $extraStyles = '<link rel="stylesheet" href="/../dsvii-talleres-edu/dsvii-proyecto/public/css/ReportView.css">';
+
     require_once __DIR__ . '/Partials/Top.php';
     ?>
 

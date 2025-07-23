@@ -1,5 +1,4 @@
 <?php
-// Iniciar sesión y verificar acceso
 session_start();
 require_once '../includes/header.php';
 require_once '../includes/db.php';

@@ -22,7 +22,7 @@ require_once __DIR__ . '/Partials/Top.php';
         <button type="submit">Iniciar Sesión</button>
 
         <div class="small-text text-center mt-3">
-            ¿No tienes cuenta? <a href="registro.php">Regístrate</a>
+            ¿No tienes cuenta? <a href="RegisterView.php">Regístrate</a>
         </div>
     </form>
 
