@@ -15,41 +15,11 @@ class ReportModel {
         return $result ?: [];
     }
 
-    public function getUserById(int $userId): array {
-        if ($userId <= 0) {
-            throw new InvalidArgumentException("Invalid user ID.");
-        }
-        $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE id = :id");
-        $stmt->bindParam(':id', $userId, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $stmt->closeCursor();
-        if (!$result) {
-            throw new NotFoundException("User not found.");
-        }
-        return $result;
-    }
-
     public function getAllWorkshops(): array {
         $stmt = $this->db->query("CALL obtener_todos_los_talleres()");
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $stmt->closeCursor();
         return $result ?: [];
-    }
-
-    public function getWorkshopById(int $workshopId): array {
-        if ($workshopId <= 0) {
-            throw new InvalidArgumentException("Invalid workshop ID.");
-        }
-        $stmt = $this->db->prepare("SELECT * FROM talleres WHERE id = :id");
-        $stmt->bindParam(':id', $workshopId, PDO::PARAM_INT);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $stmt->closeCursor();
-        if (!$result) {
-            throw new NotFoundException("Workshop not found.");
-        }
-        return $result;
     }
 
     public function getUsersWithWorkshops(): array {

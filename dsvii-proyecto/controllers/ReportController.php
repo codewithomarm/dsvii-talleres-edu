@@ -20,21 +20,9 @@ class ReportController {
                     $filename = "all_users_" . date('Ymd_His');
                     break;
 
-                case 'user':
-                    if (!is_int($param)) throw new InvalidArgumentException("User ID required as integer.");
-                    $data = $this->model->getUserById($param);
-                    $filename = "user_{$param}_" . date('Ymd_His');
-                    break;
-
                 case 'all_workshops':
                     $data = $this->model->getAllWorkshops();
                     $filename = "all_workshops_" . date('Ymd_His');
-                    break;
-
-                case 'workshop':
-                    if (!is_int($param)) throw new InvalidArgumentException("Workshop ID required as integer.");
-                    $data = $this->model->getWorkshopById($param);
-                    $filename = "workshop_{$param}_" . date('Ymd_His');
                     break;
 
                 case 'users_with_workshops':
