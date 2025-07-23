@@ -33,7 +33,7 @@
             <button type="submit">Generar Reporte</button>
         </form>
 
-        <script src="./../public/js/report.js"></script>
+        <script src="/../dsvii-talleres-edu/dsvii-proyecto/public/js/report.js"></script>
 
     </main>
 
