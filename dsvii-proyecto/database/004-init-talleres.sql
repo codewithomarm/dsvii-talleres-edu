@@ -1,4 +1,4 @@
--- Asegúrate de estar usando la base de datos correcta
+-- Usar la base de datos correcta
 USE dsvii_final;
 
 INSERT INTO talleres (
