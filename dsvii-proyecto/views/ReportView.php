@@ -1,24 +1,5 @@
-<!DOCTYPE html>
-<html lang="es">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Generación de Reportes</title>
-    <link rel="stylesheet" href="./../public/css/report.css">
-</head>
-
-<body>
-
-    <header>
-        <div class="logo-container">
-            <img src="./../public/images/logo.svg" alt="Logo Edu_Works" class="logo" />
-        </div>
-        <nav>
-            <a href="index.php">Inicio</a>
-            <a href="crear_taller.php">Crear Taller</a>
-            <a href="logout.php">Logout</a>
-        </nav>
-    </header>
+    <?php include '../views/Partials/Top.php'; ?>
 
     <main>
         <form class="card" method="POST" action="./ReportGeneration.php">
@@ -54,11 +35,4 @@
 
     </main>
 
-    <footer>
-        <div><strong>Edu_</strong>Works</div>
-        <div>Panamá 2025 ©</div>
-    </footer>
-
-</body>
-
-</html>
+    <?php include '../views/Partials/Bottom.php'; ?>
