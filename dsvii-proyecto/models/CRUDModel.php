@@ -1,36 +1,49 @@
 <?php
-session_start();
-require_once '../includes/db.php';
+class CRUDModel {
+    private PDO $pdo;
 
-// Verificar sesión y permisos
-if (!isset($_SESSION['usuario']) || !isset($_SESSION['usuario']['id'])) {
-  header('Location: ../login.php');
-  exit();
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['inscripcion_id'])) {
-  try {
-    // Verificar que la inscripción pertenece al usuario actual
-    $stmt = $conn->prepare("
-            DELETE FROM inscripciones 
-            WHERE id = ? AND usuario_id = ?
-        ");
-
-    $stmt->execute([
-      $_POST['inscripcion_id'],
-      $_SESSION['usuario']['id']
-    ]);
-
-    if ($stmt->rowCount() > 0) {
-      $_SESSION['mensaje'] = "Inscripción cancelada correctamente";
-    } else {
-      $_SESSION['error'] = "No se pudo cancelar la inscripción";
+    public function __construct(PDO $pdo) {
+        $this->pdo = $pdo;
     }
-  } catch (PDOException $e) {
-    $_SESSION['error'] = "Error al procesar la solicitud";
-    error_log("Error al eliminar inscripción: " . $e->getMessage());
-  }
-}
 
-header('Location: ' . $_SERVER['HTTP_REFERER'] ?? '../user/');
-exit();
+    // Crear taller
+    public function createTaller(array $data): bool {
+        $stmt = $this->pdo->prepare("CALL sp_create_taller(?, ?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([
+            $data['titulo'],
+            $data['descripcion'],
+            $data['cupo_maximo'],
+            $data['fecha_inicio'],
+            $data['hora_inicio'],
+            $data['fecha_fin'],
+            $data['hora_fin']
+        ]);
+    }
+
+    // Actualizar taller
+    public function updateTaller(int $id, array $data): bool {
+        $stmt = $this->pdo->prepare("CALL sp_update_taller(?, ?, ?, ?, ?, ?, ?, ?)");
+        return $stmt->execute([
+            $id,
+            $data['titulo'],
+            $data['descripcion'],
+            $data['cupo_maximo'],
+            $data['fecha_inicio'],
+            $data['hora_inicio'],
+            $data['fecha_fin'],
+            $data['hora_fin']
+        ]);
+    }
+
+    // Eliminar taller
+    public function deleteTaller(int $id): bool {
+        $stmt = $this->pdo->prepare("CALL sp_delete_taller(?)");
+        return $stmt->execute([$id]);
+    }
+
+    // Eliminar usuario
+    public function deleteUsuario(int $id): bool {
+        $stmt = $this->pdo->prepare("CALL sp_delete_usuario(?)");
+        return $stmt->execute([$id]);
+    }
+}

@@ -1,48 +1,35 @@
-<<<<<<< HEAD
-<?php
+<?php require_once __DIR__ . '/Partials/Top.php'; ?>
 
-require_once __DIR__ . '/controllers/LoginController.php';
-$mensaje = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controller = new LoginController();
-    $result = $controller->validarLogin(
-        $_POST['usuario'] ?? '',
-        $_POST['password'] ?? ''
-    );
-    $mensaje = $result['message'];
-}
-=======
-<?php 
-$extraStyles = '<link rel="stylesheet" href="/../dsvii-talleres-edu/dsvii-proyecto/public/css/LoginView.css">';
-require_once __DIR__ . '/Partials/Top.php';
->>>>>>> 9ff4469337afcf9b5507745a52097cdad8ad2d08
-?>
+<main class="main-container">
+    <form class="card" method="POST" action="LoginHandler.php">
+        <h2 class="text-center">Inicio de Sesión</h2>
 
-<main>
-    <form class="card" method="POST" action="./LoginHandler.php">
-        <h2>Inicio de Sesión</h2>
-
-        <?php if (isset($_GET['error'])): ?>
+        <?php if (!empty($_GET['error'])): ?>
             <div class="error-message">
                 <?= htmlspecialchars($_GET['error']) ?>
             </div>
         <?php endif; ?>
 
+        <?php if (!empty($mensaje)): ?>
+            <div class="alert-info">
+                <?= htmlspecialchars($mensaje) ?>
+            </div>
+        <?php endif; ?>
+
         <label for="username">Nombre de usuario</label>
-        <input type="text" id="username" name="username" required>
+        <input type="text" id="username" name="usuario" required autocomplete="username">
 
         <label for="password">Contraseña</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
 
         <button type="submit">Iniciar Sesión</button>
 
         <div class="small-text text-center mt-3">
-            ¿No tienes cuenta? <a href="RegisterView.php">Regístrate</a>
+            ¿No tienes cuenta? <a href="register.php">Regístrate</a>
         </div>
     </form>
-
-    <script src="/../dsvii-talleres-edu/dsvii-proyecto/public/js/login.js"></script>
 </main>
 
+<script src="/public/js/login.js"></script>
 
-<?php include '../views/Partials/Bottom.php'; ?>
+<?php require_once __DIR__ . '/Partials/Bottom.php'; ?>
