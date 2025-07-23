@@ -48,15 +48,25 @@ require_once __DIR__ . '/Partials/Top.php';
       <label for="email">Email</label>
       <input type="email" id="email" name="email" required>
 
-      <label>ID Type</label>
-      <div class="radio-group">
-        <?php foreach (["National", "P.E.", "P.I.", "Naturalized", "Foreigner"] as $i => $type): ?>
-          <label>
-            <input type="radio" name="id_type" value="<?= $type ?>" <?= $i === 0 ? 'required' : '' ?>>
-            <?= $type ?>
-          </label>
-        <?php endforeach; ?>
-      </div>
+      <label for="id_type">ID Type</label>
+<div class="radio-group">
+  <?php
+    $idTypes = [
+      'E'  => 'Foreigner',
+      'N'  => 'National',
+      'NA' => 'Naturalized',
+      'PE' => 'P.E.',
+      'PI' => 'P.I.'
+    ];
+  ?>
+  <?php foreach ($idTypes as $code => $label): ?>
+    <label>
+      <input type="radio" name="id_type" value="<?= $code ?>" <?= $code === 'N' ? 'required' : '' ?>>
+      <?= $label ?>
+    </label>
+  <?php endforeach; ?>
+</div>
+
 
       <label for="province">Province</label>
       <select id="province" name="province" required>
